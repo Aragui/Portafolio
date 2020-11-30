@@ -112,7 +112,7 @@ body {
 	font-weight: 300;
 	font-size: 14px;
 	line-height: 1.7;
-	color: lighten($brand-black,50%);
+	color: #000;
 	background: $brand-body-color;
 }
 #page {
@@ -1472,9 +1472,8 @@ input[type="text"] {
 				margin: 0;
 			}
 			li {
-				color: ligthen($brand-black, 70%);
 				list-style: none;
-				color: rgba(0, 0, 0, .3);
+				color: #000;
 				font-weight: 400;
 			}
 		}
