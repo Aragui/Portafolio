@@ -6,9 +6,20 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Portafolio: Contáctanos</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Portafolio de proyectos desarrollado por los alumnos de experiencia de usuario 7°A" />
-	<meta name="keywords" content="Guillermo Aragón, Guillermo Ismael Aragón Arjona, Carlos Quijada, Carlos Manuel Quijada Medina, Carlos Chacón, Carlos Chacón Pren" />
+	<meta name="description"
+		content="Portafolio de proyectos desarrollado por los alumnos de experiencia de usuario 7°A" />
+	<meta name="keywords"
+		content="Guillermo Aragón, Guillermo Ismael Aragón Arjona, Carlos Quijada, Carlos Manuel Quijada Medina, Carlos Chacón, Carlos Chacón Pren" />
 
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1YPZ1YTZV9"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-1YPZ1YTZV9');
+	</script>
 	<!-- 
 	//////////////////////////////////////////////////////
 
@@ -85,7 +96,8 @@
 								<li><a href="https://aragui.github.io/Portafolio/">Inicio</a></li>
 								<li><a href="https://aragui.github.io/Portafolio/proyectos">Proyectos</a></li>
 								<li><a href="https://aragui.github.io/Portafolio/nosotros"> Sobre nosotros</a></li>
-								<li class="active"><a href="https://aragui.github.io/Portafolio/contacto">Contáctanos</a></li>
+								<li class="active"><a
+										href="https://aragui.github.io/Portafolio/contacto">Contáctanos</a></li>
 							</ul>
 						</div>
 					</div>
@@ -129,9 +141,13 @@
 					<div class="col-md-10 col-sm-12 col-md-push-1 animate-box">
 						<div class="row">
 							<form id="contact-form">
+								<div id="alert">
+
+								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<input name="name" required type="text" class="form-control" placeholder="Nombre" title="Por favor, escribe tu nombre">
+										<input name="name" required type="text" class="form-control"
+											placeholder="Nombre" title="Por favor, escribe tu nombre">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -159,11 +175,12 @@
 		</div><!-- END container-wrap -->
 
 		<div class="container-wrap">
-			<footer  role="contentinfo" style="height: 100px !important; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+			<footer role="contentinfo"
+				style="height: 100px !important; display: flex; flex-direction: column; justify-content: center; align-items: center;">
 				<div class="row ">
 					<div class="col-md-12 text-center">
 						<p>
-							<small class="block"> Desarrollado para la clase de Experiencias de usuario 7-A</small> 
+							<small class="block"> Desarrollado para la clase de Experiencias de usuario 7-A</small>
 						</p>
 					</div>
 				</div>
@@ -179,12 +196,27 @@
 			const name = form.elements['name'].value;
 			const email = form.elements['email'].value;
 			const message = form.elements['message'].value;
+			const alert = document.querySelector('#alert');
 			const data = {
 				name,
 				email,
 				message
 			}
-			console.log(data)
+			fetch('https://ux-mailer.herokuapp.com/api/send-email', {
+				method: 'POST',
+				mode: 'no-cors',
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(res => res.json())
+				.catch(e => {
+					alert.innerHTML = '<div class="alert alert-danger" role="alert">Ha ocurrido un error, intentalo de nuevo en un momento</div>'
+				})
+				.then(json => {
+					alert.innerHTML = '<div class="alert alert-success" id="success" role="alert">El mensaje fue enviado correctamente</div>'
+				})
 			e.preventDefault();
 		})
 	</script>
