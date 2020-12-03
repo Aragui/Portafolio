@@ -188,38 +188,7 @@
 		</div><!-- END container-wrap -->
 	</div>
 
-	<script>
-		const form = document.querySelector('#contact-form');
-
-
-		form.addEventListener('submit', e => {
-			const name = form.elements['name'].value;
-			const email = form.elements['email'].value;
-			const message = form.elements['message'].value;
-			const alert = document.querySelector('#alert');
-			const data = {
-				name,
-				email,
-				message
-			}
-			fetch('https://ux-mailer.herokuapp.com/api/send-email', {
-				method: 'POST',
-				mode: 'no-cors',
-				body: JSON.stringify(data),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-				.then(res => res.json())
-				.catch(e => {
-					alert.innerHTML = '<div class="alert alert-danger" role="alert">Ha ocurrido un error, intentalo de nuevo en un momento</div>'
-				})
-				.then(json => {
-					alert.innerHTML = '<div class="alert alert-success" id="success" role="alert">El mensaje fue enviado correctamente</div>'
-				})
-			e.preventDefault();
-		})
-	</script>
+	
 
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
@@ -242,6 +211,54 @@
 	<script src="https://aragui.github.io/Portafolio/js/jquery.countTo.js"></script>
 	<!-- Main -->
 	<script src="https://aragui.github.io/Portafolio/js/main.js"></script>
+
+	<script>
+		const form = document.querySelector('#contact-form');
+
+
+		form.addEventListener('submit', e => {
+			const name = form.elements['name'].value;
+			const email = form.elements['email'].value;
+			const message = form.elements['message'].value;
+			const alert = document.querySelector('#alert');
+			const data = {
+				name,
+				email,
+				message
+			}
+
+			$.ajax({
+				url: 'https://ux-mailer.herokuapp.com/api/send-email',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(data),
+				crossDomain: 'no-cors',
+				dataType: true,
+				success: data => {
+					alert.innerHTML = '<div class="alert alert-danger" role="alert">Ha ocurrido un error, intentalo de nuevo en un momento</div>'
+				},
+				error: e => {
+					alert.innerHTML = '<div class="alert alert-success" id="success" role="alert">El mensaje fue enviado correctamente</div>'
+				}
+			})
+			/* fetch('http://localhost:4000/api/send-email', {
+				method: 'POST',
+				mode: 'no-cors',
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(res => res.json())
+				.catch(e => {
+					alert.innerHTML = '<div class="alert alert-danger" role="alert">Ha ocurrido un error, intentalo de nuevo en un momento</div>'
+				})
+				.then(json => {
+					alert.innerHTML = '<div class="alert alert-success" id="success" role="alert">El mensaje fue enviado correctamente</div>'
+				}) */
+			e.preventDefault();
+		})
+	</script>
 
 </body>
 
